@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 視窗歸零校正 */
+        body{
+            margin: 0;
+        }
+        /* 針對padding做外框自動計算 */
+        *{
+            box-sizing: border-box;
+        }
+        /* 背景圖置中縮放 */
+        .background-fix{
+            background-size: cover;
+            background-position: center;
+        }
+        /* 最外層框架 */
+        #content{
+            display: flex;
+        }
+        #navbar{
+            background-color: coral;
+            width: 366px;
+            height: 100vh;
+            padding: 80px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            /* align-content:space-around ; */
+        }
+        #navbtn{
+            display: none;
+        }
+        .navbtn_slide{
+            /* background-color: salmon; */
+            display: none;
+            /* border-radius: 10px; */
+        }
+        #logo{
+            background-color: yellow;
+            background-image: url(img/jay_G_avatar.jpg);
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+        ul{
+            list-style: none;
+        }
+        li{
+            list-style: none;
+            margin: 30px;
+        }
+        #main{
+            width: calc(100% - 366px);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #block
+        {
+            margin: 0;
+            width: 965px;
+            height: 570px;
+            display: flex;
+            /* flex-flow: column; */
+            justify-content: space-between;
+            /* align-content: space-between; */
+        }
+        .item{
+            width: 315px;
+            height: 570px;
+            background-color: teal;
+            /* display: inline-block; */
+            margin: 0;
+        }
+        #item1{
+            background-image: url('img/snowboard_cover_1600x900.jpg');
+        }
+        #item2{
+            background-image: url('img/snowboard_vh_1.jpg');
+        }
+        #item3{
+            background-image: url('img/snowboard_vh_2.jpg');
+        }
+        .mask{
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 255, 0.8);
+            transition: 0.8s;
+        }
+        .mask:hover{
+            background-color: rgba(0, 0, 255, 0);
+        }
+        .lightbox{
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3);
+            top: 0;
+            left: 0;
+        }
+        .lightbox img{
+            max-width: 85%;
+            max-height: 85%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
+        .lightbox:target{
+            display: block;
+        }
+        /* 小螢幕版本 */
+        @media (max-width: 1330px){
+            #block{
+                width: 800px;
+                height: 560px;
+                flex-flow: row wrap;
+                /* justify-content: center; */
+                /* align-content: center; */
+            }
+            #item1{
+                width: 100%;
+                height: calc(50% - 5px);
+                /* margin: 0 0 10px 0; */
+            }
+            #item2{
+                width: calc(50% - 5px);
+                height: calc(50% - 5px);
+                /* margin: 0 10px 0 0; */
+                align-self: flex-end;
+            }
+            #item3{
+                width: calc(50% - 5px);
+                height: calc(50% - 5px);
+                align-self: flex-end;
+
+            }
+            #main{
+                /* flex-wrap: wrap; */
+                align-content: center;
+            }
+        }
+        /* 平板版本 */
+        @media (max-width: 1165px){
+            #content{
+                flex-direction: column;
+                align-items: center;
+            }
+            #navbar{
+                width: 100%;
+                height: 100px;
+                padding: 0 0 0 0;
+                flex-direction: row;
+                justify-content: space-around;
+                display: flex;
+            }
+            #menu{
+                display: flex;
+                flex-direction: row;
+            }
+            .menu_btn li{
+                margin: 0 10px;
+            }
+            #logo{
+                width: 80px;
+                height: 80px;
+            }
+            #main{
+                width: 100%;
+                height: calc(100vh - 100px);
+                /* flex-wrap: nowrap; */
+            }
+            #block{
+                width: 700px;
+                height: 800px;
+            }
+            #item1{
+                width: 700px;
+                height: 400px;
+                /* margin: 0 0 10px 0; */
+            }
+            #item2{
+                width: 345px;
+                height: 390px;
+                /* margin: 0 10px 0 0; */
+                /* align-self: inherit ; */
+            }
+            #item3{
+                width: 345px;
+                height: 390px;
+                /* align-self: center; */
+            }
+        }
+        /* 手機版本 */
+        @media (max-width: 716px){
+            #navbar{
+                height: 80px;
+                padding: 20px;
+                justify-content: space-between;
+            }
+            .navbtn{
+                width: 40px;
+                height: 50px;
+                background-color: rosybrown;
+                display: block;
+                /* align-self: flex-start; */
+            }
+            .navbtn:hover{
+                background-color: seagreen;
+            }
+            .navbtn_slide{
+                display: inline-block;
+                position: absolute;
+                top: 60px;
+                left: -80px;
+            }
+            .navbtn:hover ~ .navbtn_slide{
+                left: 20px;
+                transition: 1s;
+            }
+            .navbtn_slide:hover{
+                left: 20px;
+                transition: 1s;
+            }
+
+            .navbtn_slide ul{
+                margin: 0;
+                padding: 0;
+            }
+            .navbtn_slide div{
+                background-color: maroon;
+                border-radius: 10px;
+            }
+            .navbtn_slide li{
+                margin: 10px;
+            }
+            #navbtn2{
+                background-color: unset;
+            }
+            #logo{
+                width: 55px;
+                height: 55px;
+            }
+            #menu{
+                display: none;
+            }
+            #main{
+                width: 100%;
+                height: 150vh;
+            }
+            #block{
+                width: 100%;
+                height: 100%;
+            }
+            #item1{
+                width: 100%;
+                height: 50vh;
+            }
+            #item2{
+                width: 100%;
+                height: 50vh;
+            }
+            #item3{
+                width: 100%;
+                height: 50vh;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="navbar">
+            <div id="navbtn1" class="navbtn"></div>
+            <div class="navbtn_slide">
+                <ul>
+                    <div><li><a href="#img1">Riding </a></li></div>
+                    <div><li><a href="#img2">Jumping</a></li></div>
+                    <div><li><a href="#img3">Landing</a></li></div>
+                </ul>
+            </div>
+            <div id="logo" class="background-fix"></div>
+            <div id="navbtn2" class="navbtn"></div>
+            <ul id="menu">
+                <div id="menu_btn" class="menu_btn"><li>Riding</li></div>
+                <div id="menu_btn" class="menu_btn"><li>Jumping</li></div>
+                <div id="menu_btn" class="menu_btn"><li>Landing</li></div>
+            </ul>
+        </div>
+        <div id="img">
+            <a href="#" id="img1" class="lightbox"><img src="img/snowboard_cover_1600x900.jpg" alt=""></a>
+            <a href="#" id="img2" class="lightbox"><img src="img/Snowboard_vh_1.jpg" alt=""></a>
+            <a href="#" id="img3" class="lightbox"><img src="img/Snowboard_vh_2.jpg" alt=""></a>
+        </div>
+        <div id="main">
+            <div id="block">
+                <div id="item1" class="item background-fix">
+                    <a href="#img1"><div class="mask"></div></a>
+                </div>
+                <div id="item2" class="item background-fix">
+                    <a href="#img2"><div class="mask"></div></a>
+                 </div>
+                <div id="item3" class="item background-fix">
+                    <a href="#img3"><div class="mask"></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
